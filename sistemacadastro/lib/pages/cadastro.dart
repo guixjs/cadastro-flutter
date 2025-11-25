@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:sistemacadastro/pages/cadastro.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Cadastro extends StatefulWidget {
+  const Cadastro({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Cadastro> createState() => _CadastroState();
 }
 
-class _LoginState extends State<Login> {
+class _CadastroState extends State<Cadastro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white ,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.green,
         title: const Text(
-          'Tela de login',
+          'Tela de cadastro',
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),
@@ -27,12 +26,29 @@ class _LoginState extends State<Login> {
           child: Form(
             child: Column(
               children: [
-                Icon(
-                  Icons.account_circle_rounded,
-                  color: Colors.black,
-                  size: 100,
+                Icon(Icons.app_registration, color: Colors.black, size: 100),
+                SizedBox(height: 5),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Nome",
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w200,
+                    fontSize: 14,
+                  ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 5),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: "E-mail",
@@ -75,6 +91,28 @@ class _LoginState extends State<Login> {
                   ),
                   obscureText: true,
                 ),
+                SizedBox(height: 5),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Senha",
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w200,
+                    fontSize: 14,
+                  ),
+                  obscureText: true,
+                ),
                 Padding(
                   padding: EdgeInsetsGeometry.only(top: 15, bottom: 15),
                   child: SizedBox(
@@ -88,26 +126,9 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       child: Text(
-                        "Login",
+                        "Cadastrar",
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Cadastro()),
-                    );
-                  },
-                  child: Text(
-                    "Cadastrar-se",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.blue,
                     ),
                   ),
                 ),
