@@ -8,6 +8,8 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +26,25 @@ class _CadastroState extends State<Cadastro> {
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Icon(Icons.app_registration, color: Colors.black, size: 100),
                 SizedBox(height: 5),
                 TextFormField(
+                  validator: (String? value) {
+                    if (value == null) {
+                      return "Por favor, insira seu nome de usuário";
+                    }
+                    if (value.length < 3) {
+                      return "Nome inválido, tamanho insuficiente (min: 3)";
+                    }
+                    if (value.contains("@") == true ||
+                        value.contains(".") == true) {
+                      return "Nome inválido. Não utilize caracteres especiais";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "Nome",
                     fillColor: Colors.white,
@@ -50,6 +66,19 @@ class _CadastroState extends State<Cadastro> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  validator: (String? value) {
+                    if (value == null) {
+                      return "Por favor, insira seu e-mail";
+                    }
+                    if (value.length < 5) {
+                      return "E-mail inválido, tamanho insuficiente (min: 5)";
+                    }
+                    if (value.contains("@") == false ||
+                        value.contains(".") == false) {
+                      return "E-mail inválido. Formato incorreto";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "E-mail",
                     fillColor: Colors.white,
@@ -71,6 +100,15 @@ class _CadastroState extends State<Cadastro> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  validator: (String? value) {
+                    if (value == null) {
+                      return "Por favor, insira sua nova senha";
+                    }
+                    if (value.length < 8) {
+                      return "Senha inválida, tamanho insuficiente (min: 8)";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "Senha",
                     fillColor: Colors.white,
@@ -93,8 +131,17 @@ class _CadastroState extends State<Cadastro> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  validator: (String? value) {
+                    if (value == null) {
+                      return "Por favor, insira sua nova senha";
+                    }
+                    if (value.length < 8) {
+                      return "Senha inválida, tamanho insuficiente (min: 8)";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
-                    hintText: "Senha",
+                    hintText: "Confirme a senha",
                     fillColor: Colors.white,
                     filled: true,
                     hintStyle: TextStyle(
@@ -118,7 +165,9 @@ class _CadastroState extends State<Cadastro> {
                   child: SizedBox(
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        botaoCadastrar();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                         shape: RoundedRectangleBorder(
@@ -138,5 +187,11 @@ class _CadastroState extends State<Cadastro> {
         ),
       ),
     );
+  }
+
+  botaoCadastrar() {
+    if (_formKey.currentState!.validate()) {
+      print("legal");
+    }
   }
 }

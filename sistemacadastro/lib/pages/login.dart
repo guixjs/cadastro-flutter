@@ -9,10 +9,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white ,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.green,
@@ -25,6 +27,7 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Icon(
@@ -34,6 +37,19 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 40),
                 TextFormField(
+                  validator: (String? value) {
+                    if (value == null) {
+                      return "Por favor, insira seu e-mail";
+                    }
+                    if (value.length < 5) {
+                      return "E-mail inválido, tamanho insuficiente (min: 5)";
+                    }
+                    if (value.contains("@") == false ||
+                        value.contains(".") == false) {
+                      return "E-mail inválido, formato incorreto";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "E-mail",
                     fillColor: Colors.white,
@@ -55,6 +71,15 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  validator: (String? value) {
+                    if (value == null) {
+                      return "Por favor, insira seu senha";
+                    }
+                    if (value.length < 8) {
+                      return "Senha inválido, tamanho insuficiente (min: 8)";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "Senha",
                     fillColor: Colors.white,
@@ -80,7 +105,9 @@ class _LoginState extends State<Login> {
                   child: SizedBox(
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        botaoEntrar();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                         shape: RoundedRectangleBorder(
@@ -117,5 +144,11 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  botaoEntrar() {
+    if (_formKey.currentState!.validate()) {
+      print("legal");
+    }
   }
 }
