@@ -156,9 +156,21 @@ class _LoginState extends State<Login> {
 
   botaoEntrar() {
     if (_formKey.currentState!.validate()) {
-      String email = _emailController.text;
+      String email = _emailController.text.trim();
       String senha = _senhaController.text;
-      _authService.loginUser(email: email, senha: senha);
+      () async {
+        final result = await _authService.loginUser(email: email, senha: senha);
+        if (result != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Não foi possível realizar o login, credenciais inválidas",
+                style: TextStyle(color: Colors.red, fontSize: 18),
+              ),
+            ),
+          );
+        }
+      }();
     }
   }
 }

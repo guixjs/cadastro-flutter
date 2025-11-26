@@ -19,7 +19,12 @@ class AuthService {
       await _auth.signInWithEmailAndPassword(email: email, password: senha);
       return null;
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return 'usuário não cadastrado';
+      }
       return e.message;
+    } catch (e) {
+      return e.toString();
     }
   }
 

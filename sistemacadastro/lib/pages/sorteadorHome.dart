@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:sistemacadastro/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Sorteador extends StatefulWidget {
   const Sorteador({super.key});
@@ -13,10 +14,20 @@ class Sorteador extends StatefulWidget {
 class _SorteadorState extends State<Sorteador> {
   int numeroSorteado = 0;
   final Random random = Random();
+  String _displayName = 'usuário';
 
   void sortearNumero() {
     setState(() {
       numeroSorteado = random.nextInt(100) + 1;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      _displayName = user?.displayName ?? 'usuário';
     });
   }
 
@@ -45,7 +56,7 @@ class _SorteadorState extends State<Sorteador> {
                     style: TextStyle(fontSize: 18, color: Colors.green),
                   ),
                   TextSpan(
-                    text: 'usuário',
+                    text: _displayName,
                     style: const TextStyle(
                       fontSize: 18,
                       color: Colors.green,
