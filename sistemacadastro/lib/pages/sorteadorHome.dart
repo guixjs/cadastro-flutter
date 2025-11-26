@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:sistemacadastro/auth.dart';
+
 class Sorteador extends StatefulWidget {
   const Sorteador({super.key});
 
@@ -94,7 +96,8 @@ class _SorteadorState extends State<Sorteador> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      // Implementar logout
+                      AuthService().logoutUser();
+                      
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,

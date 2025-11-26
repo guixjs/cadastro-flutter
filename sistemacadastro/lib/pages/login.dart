@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistemacadastro/auth.dart';
 import 'package:sistemacadastro/pages/cadastro.dart';
 
 class Login extends StatefulWidget {
@@ -10,6 +11,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +43,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 40),
                 TextFormField(
+                  controller: _emailController,
                   validator: (String? value) {
                     if (value == null) {
                       return "Por favor, insira seu e-mail";
@@ -71,6 +78,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  controller: _senhaController,
                   validator: (String? value) {
                     if (value == null) {
                       return "Por favor, insira seu senha";
@@ -148,7 +156,9 @@ class _LoginState extends State<Login> {
 
   botaoEntrar() {
     if (_formKey.currentState!.validate()) {
-      print("legal");
+      String email = _emailController.text;
+      String senha = _senhaController.text;
+      _authService.loginUser(email: email, senha: senha);
     }
   }
 }

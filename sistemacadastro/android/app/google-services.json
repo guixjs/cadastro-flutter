@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "209602607942",
+    "project_id": "sistema-cadastr-login-flutter",
+    "storage_bucket": "sistema-cadastr-login-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209602607942:android:aff9b2d84d592115838347",
+        "android_client_info": {
+          "package_name": "com.example.sistemacadastro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRHfNPW7M1QuD6HBVAq0kbnMNdr0athQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

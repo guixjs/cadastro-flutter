@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistemacadastro/auth.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({super.key});
@@ -9,6 +10,12 @@ class Cadastro extends StatefulWidget {
 
 class _CadastroState extends State<Cadastro> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +39,7 @@ class _CadastroState extends State<Cadastro> {
                 Icon(Icons.app_registration, color: Colors.black, size: 100),
                 SizedBox(height: 5),
                 TextFormField(
+                  controller: _nomeController,
                   validator: (String? value) {
                     if (value == null) {
                       return "Por favor, insira seu nome de usuário";
@@ -66,6 +74,7 @@ class _CadastroState extends State<Cadastro> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  controller: _emailController,
                   validator: (String? value) {
                     if (value == null) {
                       return "Por favor, insira seu e-mail";
@@ -100,6 +109,7 @@ class _CadastroState extends State<Cadastro> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  controller: _senhaController,
                   validator: (String? value) {
                     if (value == null) {
                       return "Por favor, insira sua nova senha";
@@ -111,37 +121,6 @@ class _CadastroState extends State<Cadastro> {
                   },
                   decoration: InputDecoration(
                     hintText: "Senha",
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w200,
-                      fontSize: 14,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w200,
-                    fontSize: 14,
-                  ),
-                  obscureText: true,
-                ),
-                SizedBox(height: 5),
-                TextFormField(
-                  validator: (String? value) {
-                    if (value == null) {
-                      return "Por favor, insira sua nova senha";
-                    }
-                    if (value.length < 8) {
-                      return "Senha inválida, tamanho insuficiente (min: 8)";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Confirme a senha",
                     fillColor: Colors.white,
                     filled: true,
                     hintStyle: TextStyle(
@@ -189,9 +168,12 @@ class _CadastroState extends State<Cadastro> {
     );
   }
 
-  botaoCadastrar() {
+  void botaoCadastrar() {
+    String nome = _nomeController.text;
+    String email = _emailController.text;
+    String senha = _senhaController.text;
     if (_formKey.currentState!.validate()) {
-      print("legal");
+      _authService.cadUser(nome: nome, email: email, senha: senha);
     }
   }
 }
