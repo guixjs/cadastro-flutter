@@ -7,11 +7,21 @@ class AuthService {
     required String email,
     required String senha,
   }) async {
-    UserCredential user = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: senha,
-    );
-    await user.user!.updateDisplayName(nome);
+    try {
+      UserCredential user = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: senha,
+      );
+      await user.user!.updateDisplayName(nome);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        return 'e-mail já cadastrado';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   loginUser({required String email, required String senha}) async {
@@ -22,7 +32,10 @@ class AuthService {
       if (e.code == 'user-not-found') {
         return 'usuário não cadastrado';
       }
-      return e.message;
+      if (e.code == 'wrong-password') {
+        return 'Credenciais inválidas';
+      }
+      return "Não foi possível realizar o login no momento";
     } catch (e) {
       return e.toString();
     }

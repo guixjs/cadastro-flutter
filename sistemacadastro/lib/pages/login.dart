@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sistemacadastro/auth.dart';
 import 'package:sistemacadastro/pages/cadastro.dart';
+import 'package:sistemacadastro/pages/sorteadorHome.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -154,23 +155,29 @@ class _LoginState extends State<Login> {
     );
   }
 
-  botaoEntrar() {
-    if (_formKey.currentState!.validate()) {
-      String email = _emailController.text.trim();
-      String senha = _senhaController.text;
-      () async {
-        final result = await _authService.loginUser(email: email, senha: senha);
-        if (result != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                "Não foi possível realizar o login, credenciais inválidas",
-                style: TextStyle(color: Colors.red, fontSize: 18),
-              ),
-            ),
-          );
-        }
-      }();
+  Future<void> botaoEntrar() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    String email = _emailController.text.trim();
+    String senha = _senhaController.text;
+
+    final result = await _authService.loginUser(email: email, senha: senha);
+    if (result != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            result,
+            style: TextStyle(color: Colors.red, fontSize: 16),
+          ),
+        ),
+      );
+      return;
     }
+
+    // Login bem-sucedido: navegar para a tela principal
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Sorteador()),
+    );
   }
 }

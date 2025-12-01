@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sistemacadastro/auth.dart';
+import 'package:sistemacadastro/pages/login.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({super.key});
@@ -168,12 +169,42 @@ class _CadastroState extends State<Cadastro> {
     );
   }
 
-  void botaoCadastrar() {
-    String nome = _nomeController.text;
-    String email = _emailController.text;
+  void botaoCadastrar() async {
+    String nome = _nomeController.text.trim();
+    String email = _emailController.text.trim();
     String senha = _senhaController.text;
     if (_formKey.currentState!.validate()) {
-      _authService.cadUser(nome: nome, email: email, senha: senha);
+      final result = await _authService.cadUser(
+        nome: nome,
+        email: email,
+        senha: senha,
+      );
+      if (result != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              result,
+              style: TextStyle(color: Colors.red, fontSize: 16),
+            ),
+          ),
+        );
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Cadastro realizado com sucesso',
+            style: TextStyle(fontSize: 16),
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Login()),
+      );
     }
   }
 }

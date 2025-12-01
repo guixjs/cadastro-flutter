@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:sistemacadastro/auth.dart';
+import 'package:sistemacadastro/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Sorteador extends StatefulWidget {
@@ -106,9 +107,15 @@ class _SorteadorState extends State<Sorteador> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {
-                      AuthService().logoutUser();
-                      
+                    onPressed: () async {
+                      await AuthService().logoutUser();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Logout realizado')),
+                      );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Login()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
